@@ -1,24 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import Main from "./page/Main";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams,
+} from "react-router-dom";
+import logo from "./asset/logo.png";
+import Bar from "./component/Bar.js";
+import { makeStyles } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: ["Dancing Script"].join(","),
+  },
+});
+
+const useStyles = makeStyles((theme) => ({
+  app: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    backgroundColor: "white",
+    alignItems: "center",
+  },
+}));
 function App() {
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className={classes.app}>
+        <Bar />
+        <img
+          style={{ resizeMode: "contain", width: 100 }}
+          src={logo}
+          alt="Background"
+        />
+
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Main />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 
